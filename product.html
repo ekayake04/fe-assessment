@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Details</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container product-detail-container">
+    <div class="product-details" id="product-details">
+      <!-- Product info will be injected here -->
+    </div>
+  </div>
+  <script>
+    // Product data: each product has an 'images' array (same image reused)
+    const products = {
+      case1: {
+        name: "iPhone 16 Pro Max Clear Case with MagSafe",
+        price: "$49.00",
+        color: "Clear",
+        images: [
+          "assets/case1.png",
+          "assets/case1.png",
+          "assets/case1.png",
+          "assets/case1.png",
+          "assets/case1.png"
+        ],
+        colors: ["#f5a5c7", "#f5e1a5", "#a5f5e1", "#a5b5f5", "#222"],
+        desc: "To purchase with monthly pricing, add this item to your bag and choose to check out with Apple Card Monthly Installments."
+      },
+      case2: {
+        name: "iPhone 16 Plus Silicone Case with MagSafe – Peony",
+        price: "$49.00",
+        color: "Peony",
+        images: [
+          "assets/case2.png",
+          "assets/case2.png",
+          "assets/case2.png",
+          "assets/case2.png",
+          "assets/case2.png"
+        ],
+        colors: ["#f5a5c7", "#f5e1a5", "#a5f5e1", "#a5b5f5", "#222"],
+        desc: "To purchase with monthly pricing, add this item to your bag and choose to check out with Apple Card Monthly Installments."
+      },
+      case3: {
+        name: "Tech21 FlexQuartz Case for iPhone 16e - Clear",
+        price: "$44.95",
+        color: "Clear",
+        images: [
+          "assets/case3.png",
+          "assets/case3.png",
+          "assets/case3.png",
+          "assets/case3.png",
+          "assets/case3.png"
+        ],
+        colors: [],
+        desc: "To purchase with monthly pricing, add this item to your bag and choose to check out with Apple Card Monthly Installments."
+      },
+      case4: {
+        name: "iPhone 16 Silicone Case with MagSafe – Periwinkle",
+        price: "$49.00",
+        color: "Periwinkle",
+        images: [
+          "assets/case4.png",
+          "assets/case4.png",
+          "assets/case4.png",
+          "assets/case4.png",
+          "assets/case4.png"
+        ],
+        colors: ["#f5a5c7", "#f5e1a5", "#a5f5e1", "#a5b5f5", "#222"],
+        desc: "To purchase with monthly pricing, add this item to your bag and choose to check out with Apple Card Monthly Installments."
+      },
+      case5: {
+        name: "iPhone 16 Plus Silicone Case with MagSafe – Aquamarine",
+        price: "$49.00",
+        color: "Aquamarine",
+        images: [
+          "assets/case5.png",
+          "assets/case5.png",
+          "assets/case5.png",
+          "assets/case5.png",
+          "assets/case5.png"
+        ],
+        colors: ["#f5a5c7", "#f5e1a5", "#a5f5e1", "#a5b5f5", "#222"],
+        desc: "To purchase with monthly pricing, add this item to your bag and choose to check out with Apple Card Monthly Installments."
+      }
+    };
+
+    // Get product id from URL
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id') || 'case1';
+    const product = products[id];
+
+    // Render product details
+    document.getElementById('product-details').innerHTML = `
+      <div class="product-info">
+        <h2>${product.name}</h2>
+        <div class="price">${product.price}</div>
+        <div class="select-row">
+          <label for="size" class="select-label">Size</label>
+          <select id="size" class="size-select">
+            <option>iPhone 15 </option>
+            <option>iPhone 16 </option>
+            <option>iPhone 16 Pro Max</option>
+          </select>
+        </div>
+        ${product.colors.length ? `
+        <div class="color-row">
+          <label class="color-label">Color – ${product.color}</label>
+          <div class="color-dots">
+            ${product.colors.map(c => `<span class="color-dot" style="background:${c}"></span>`).join('')}
+          </div>
+        </div>` : ''}
+        <div class="product-desc">${product.desc}</div>
+        <hr class="divider">
+        <div class="delivery-pickup-row">
+          <div class="delivery-section">
+            <div class="icon-label"><strong>Delivery:</strong></div>
+            <div>In Stock</div>
+            <div>Free Shipping</div>
+            <a href="#" class="delivery-link">Get delivery dates <span class="info-icon">ⓘ</span></a>
+          </div>
+          <div class="pickup-section">
+            <div class="icon-label"><strong>Pickup:</strong></div>
+            <a href="#" class="pickup-link">Check availability <span class="info-icon">ⓘ</span></a>
+          </div>
+        </div>
+        <button class="add-to-bag" onclick="window.location.href='index.html'">Add to Bag</button>
+      </div>
+      <div class="product-image-section">
+        <img class="main-product-image" src="${product.images[0]}" alt="${product.name}" id="mainImage">
+        <div class="image-strip">
+          ${product.images.map((img, i) => `
+            <img src="${img}" alt="Alt ${i}" class="thumb${i === 0 ? ' selected' : ''}" onclick="document.getElementById('mainImage').src='${img}'; document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('selected')); this.classList.add('selected');">
+          `).join('')}
+        </div>
+      </div>
+    `;
+  </script>
+</body>
+</html>
